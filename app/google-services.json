@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "223577424628",
+    "firebase_url": "https://piktoclean.firebaseio.com",
+    "project_id": "piktoclean",
+    "storage_bucket": "piktoclean.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223577424628:android:72b8c7c4d2949f2f",
+        "android_client_info": {
+          "package_name": "piktoclean.com.pik_to_clean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdIHbDRkG9sMR3vworc8Di9jyX86DI-OA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
