@@ -1,5 +1,6 @@
 package piktoclean.com.pik_to_clean;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -249,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements
                 this,               // Activity (for callback binding)
                 mCallbacks,         // OnVerificationStateChangedCallbacks
                 token);             // ForceResendingToken from callbacks
-    }//iujhgfvdcsxaz
+    }
     // [END resend_verification]
 
     // [START sign_in_with_phone]
@@ -417,7 +418,7 @@ public class LoginActivity extends AppCompatActivity implements
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
             case R.id.skipid:
-                Intent i=new Intent(LoginActivity.this,CamActivity.class);
+                Intent i=new Intent(LoginActivity.this,HomeActivity.class);
                 startActivity(i);
                 finish();
                 break;
