@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "223577424628-3btjqj4i42ora0l2l9trvd2ita63pi1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "piktoclean.com.pik_to_clean",
+            "certificate_hash": "93ce95c7da2e09a5475866ef8beb01b9026cf088"
+          }
+        },
+        {
           "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

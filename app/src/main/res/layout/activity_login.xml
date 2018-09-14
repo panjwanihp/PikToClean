@@ -1,53 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    android:id="@+id/all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="piktoclean.com.pik_to_clean.LoginActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/number"
-        android:layout_width="219dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="phone"
-        app:layout_constraintBottom_toTopOf="@+id/OTP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
-        android:id="@+id/OTP"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:ems="10"
-        android:visibility="invisible"
-        android:inputType="numberSigned"
-        app:layout_constraintBottom_toTopOf="@+id/log"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="50dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="89dp"
+            android:layout_height="98dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/gd" />
+
+        <TextView
+            android:layout_width="279dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="PIK-TO-CLEAN"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Smart Waste Detection System"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <Button
-        android:id="@+id/log"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="160dp"
-        android:text="GetOTP"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.406"
-        app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/skipid"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="5dp"
+
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:text="SKIP>>"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textStyle="italic"
+        android:visibility="visible" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/mobno"
+            android:layout_width="match_parent"
+            android:layout_height="293dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/number"
+                style="@android:style/Widget.Material.AutoCompleteTextView"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+                android:drawablePadding="20dp"
+                android:hint="Mobile Number"
+                android:inputType="text|number" />
+
+            <Button
+                android:id="@+id/sendotpButton"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/buttonstylepink"
+                android:drawableRight="@drawable/ic_send_black_24dp"
+                android:text="SEND OTP"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/otpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="293dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/OTP"
+                style="@android:style/Widget.Material.AutoCompleteTextView"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:drawablePadding="20dp"
+                android:hint="Enter OTP"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/VerifyButton"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/buttonstylepink"
+                android:drawableRight="@drawable/ic_send_black_24dp"
+                android:text="Verify"
+                android:textColor="#fff" />
+            <Button
+                android:id="@+id/button_resend"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/buttonstylepink"
+                android:drawableRight="@drawable/ic_send_black_24dp"
+                android:text="Verify"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
