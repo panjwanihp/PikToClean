@@ -1,7 +1,10 @@
 package piktoclean.com.pik_to_clean;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -69,6 +72,12 @@ public class LoginActivity extends AppCompatActivity implements
     private FirebaseAuth mAuth;
     // [END declare_auth]
 
+
+    //Shared preference
+    private SharedPreferences mpreference;
+    private SharedPreferences.Editor mEditor;
+
+
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
@@ -98,6 +107,8 @@ public class LoginActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
+
+
 
         // Assign views
         mPhoneNumberViews = findViewById(R.id.mobno);
@@ -355,6 +366,7 @@ public class LoginActivity extends AppCompatActivity implements
                 break;
         }
 
+
         if (user == null) {
             // Signed out
             //mPhoneNumberViews.setVisibility(View.VISIBLE);
@@ -364,6 +376,13 @@ public class LoginActivity extends AppCompatActivity implements
         } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
+
+            //shared preference
+            mpreference = getSharedPreferences("piktoclean.com.pik_to_clean", Context.MODE_PRIVATE);
+            mEditor = mpreference.edit();
+            mEditor.putString("user",mPhoneNumberField.getText().toString());
+            mEditor.commit();
+
             Intent i=new Intent(LoginActivity.this,NavBarActivity.class);
             startActivity(i);
             finish();
@@ -397,6 +416,7 @@ public class LoginActivity extends AppCompatActivity implements
             v.setEnabled(false);
         }
     }
+
 
     @Override
     public void onClick(View view) {
