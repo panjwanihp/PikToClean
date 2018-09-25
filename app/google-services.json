@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "223577424628-q9j5jsdhpvn7vonpg80dkjk16q2pdnb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "piktoclean.com.pik_to_clean",
+            "certificate_hash": "059e1411e6d011a8a70ca712ea4b89b1e9f5b79c"
+          }
+        },
+        {
           "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
           "client_type": 3
         }

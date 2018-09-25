@@ -87,6 +87,8 @@ public class LoginActivity extends AppCompatActivity implements
     private Button mVerifyButton;
     private Button mResendButton;
 
+    private Button skipbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +111,12 @@ public class LoginActivity extends AppCompatActivity implements
         mStartButton = findViewById(R.id.sendotpButton);
         mVerifyButton = findViewById(R.id.VerifyButton);
         mResendButton = findViewById(R.id.button_resend);
-
+        skipbtn = findViewById(R.id.skipid);
         // Assign click listeners
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
         mResendButton.setOnClickListener(this);
+        skipbtn.setOnClickListener(this);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -361,7 +364,7 @@ public class LoginActivity extends AppCompatActivity implements
         } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
-            Intent i=new Intent(LoginActivity.this,CamActivity.class);
+            Intent i=new Intent(LoginActivity.this,NavBarActivity.class);
             startActivity(i);
             finish();
             //enableViews(mPhoneNumberField, mVerificationField);
