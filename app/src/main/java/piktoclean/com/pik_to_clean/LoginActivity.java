@@ -418,7 +418,7 @@ public class LoginActivity extends AppCompatActivity implements
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
             case R.id.skipid:
-                Intent i=new Intent(LoginActivity.this,HomeActivity.class);
+                Intent i=new Intent(LoginActivity.this,NavBarActivity.class);
                 startActivity(i);
                 finish();
                 break;
