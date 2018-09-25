@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
                         if(pref.getBoolean("activity_executed", false)){
-                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(MainActivity.this, NavBarActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
