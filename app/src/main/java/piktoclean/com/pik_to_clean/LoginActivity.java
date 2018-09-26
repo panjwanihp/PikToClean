@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +98,9 @@ public class LoginActivity extends AppCompatActivity implements
     private Button mResendButton;
 
     private Button skipbtn;
+    private ProgressBar send;
+    private ProgressBar resend;
+    private ProgressBar verify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,9 @@ public class LoginActivity extends AppCompatActivity implements
         mVerifyButton = findViewById(R.id.VerifyButton);
         mResendButton = findViewById(R.id.button_resend);
         skipbtn = findViewById(R.id.skipid);
+        send=findViewById(R.id.send);
+        resend=findViewById(R.id.Resend);
+        verify=findViewById(R.id.verify);
         // Assign click listeners
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
@@ -132,7 +139,6 @@ public class LoginActivity extends AppCompatActivity implements
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
-
         // Initialize phone auth callbacks
         // [START phone_auth_callbacks]
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -152,6 +158,10 @@ public class LoginActivity extends AppCompatActivity implements
 
                 // [START_EXCLUDE silent]
                 // Update the UI and attempt sign in with the phone credential
+//
+//                disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,mVerificationField,send,resend,verify);
+//                mDetailText.setText("Verification Succeeded");
+
                 updateUI(STATE_VERIFY_SUCCESS, credential);
                 // [END_EXCLUDE]
                 signInWithPhoneAuthCredential(credential);
@@ -161,6 +171,10 @@ public class LoginActivity extends AppCompatActivity implements
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
+//                enableViews(mStartButton, mPhoneNumberField);
+//                disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
+//                mDetailText.setText("Verification Failed");
+                updateUI(STATE_VERIFY_FAILED);
                 Log.w(TAG, "onVerificationFailed", e);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
@@ -179,14 +193,15 @@ public class LoginActivity extends AppCompatActivity implements
                 }
 
                 // Show a message and update the UI
-                // [START_EXCLUDE]
-                updateUI(STATE_VERIFY_FAILED);
-                // [END_EXCLUDE]
             }
 
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
+//                enableViews(mVerifyButton, mResendButton, mVerificationField);
+//                disableViews(mStartButton, mPhoneNumberField,send,resend,verify);
+//                mDetailText.setText("OTP sent");
+                    updateUI(STATE_CODE_SENT);
                 // The SMS verification code has been sent to the provided phone number, we
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
@@ -196,10 +211,6 @@ public class LoginActivity extends AppCompatActivity implements
                 mVerificationId = verificationId;
                 mResendToken = token;
 
-                // [START_EXCLUDE]
-                // Update UI
-                updateUI(STATE_CODE_SENT);
-                // [END_EXCLUDE]
             }
         };
         // [END phone_auth_callbacks]
@@ -292,6 +303,7 @@ public class LoginActivity extends AppCompatActivity implements
                             }
                             // [START_EXCLUDE silent]
                             // Update UI
+              //              mDetailText.setText("Sign in failed");
                             updateUI(STATE_SIGNIN_FAILED);
                             // [END_EXCLUDE]
                         }
@@ -309,6 +321,9 @@ public class LoginActivity extends AppCompatActivity implements
         if (user != null) {
             updateUI(STATE_SIGNIN_SUCCESS, user);
         } else {
+//            enableViews(mStartButton, mPhoneNumberField);
+//            disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
+//            mDetailText.setText(null);
             updateUI(STATE_INITIALIZED);
         }
     }
@@ -326,40 +341,41 @@ public class LoginActivity extends AppCompatActivity implements
             case STATE_INITIALIZED:
                 // Initialized state, show only the phone number field and start button
                 enableViews(mStartButton, mPhoneNumberField);
-                disableViews(mVerifyButton, mResendButton, mVerificationField);
+                disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
                 mDetailText.setText(null);
+
                 break;
             case STATE_CODE_SENT:
                 // Code sent state, show the verification field, the
-                enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
-                disableViews(mStartButton);
-                mDetailText.setText("status_code_sent");
+                enableViews(mVerifyButton, mResendButton, mVerificationField);
+                disableViews(mStartButton, mPhoneNumberField,send,resend,verify);
+                mDetailText.setText("OTP sent");
                 break;
             case STATE_VERIFY_FAILED:
                 // Verification has failed, show all options
-                enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
-                        mVerificationField);
-                mDetailText.setText("status_verification_failed");
+                enableViews(mStartButton, mPhoneNumberField);
+                disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
+                mDetailText.setText("Verification Failed");
                 break;
             case STATE_VERIFY_SUCCESS:
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
-                        mVerificationField);
-                mDetailText.setText("status_verification_succeeded");
+                        mVerificationField,send,resend,verify);
+                mDetailText.setText("Verification Succeeded");
 
                 // Set the verification text based on the credential
                 if (cred != null) {
                     if (cred.getSmsCode() != null) {
                         mVerificationField.setText(cred.getSmsCode());
                     } else {
-                        mVerificationField.setText("instant_validation");
+                        mVerificationField.setText("Instant Validation");
                     }
                 }
 
                 break;
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
-                mDetailText.setText("status_sign_in_failed");
+                mDetailText.setText("Sign in failed");
                 break;
             case STATE_SIGNIN_SUCCESS:
                 // Np-op, handled by sign-in check
@@ -405,27 +421,18 @@ public class LoginActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void enableViews(View... views) {
-        for (View v : views) {
-            v.setEnabled(true);
-        }
-    }
-
-    private void disableViews(View... views) {
-        for (View v : views) {
-            v.setEnabled(false);
-        }
-    }
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sendotpButton:
+                Log.d("jhb","kijhb");
+                disableViews(mStartButton);
+                enableViews(send);
                 if (!validatePhoneNumber()) {
+                    enableViews(mStartButton);
+                    disableViews(send);
                     return;
                 }
-
                 startPhoneNumberVerification(mPhoneNumberField.getText().toString());
                 break;
             case R.id.VerifyButton:
@@ -435,10 +442,16 @@ public class LoginActivity extends AppCompatActivity implements
                     return;
                 }
 
+                disableViews(mVerifyButton);
+                enableViews(verify);
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
             case R.id.button_resend:
+
+                disableViews(mResendButton);
+                enableViews(resend);
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
+
                 break;
             case R.id.skipid:
                 Intent i=new Intent(LoginActivity.this,NavBarActivity.class);
@@ -447,4 +460,22 @@ public class LoginActivity extends AppCompatActivity implements
                 break;
         }
     }
+
+    private void enableViews(View... views) {
+        for (View v : views) {
+            v.setEnabled(true);
+
+            v.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void disableViews(View... views) {
+        for (View v : views) {
+            v.setEnabled(false);
+            v.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+
 }
