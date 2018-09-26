@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/slide_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp"
+        app:srcCompat="@drawable/gd" />
+
+    <TextView
+        android:id="@+id/slide_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slide_image"
+        android:layout_centerHorizontal="true"
+        android:text="WHAT IS PMKVY?"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/slide_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slide_heading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp"
+        android:text="Approved for another four years (2016-2020) to benefit 10 million youth Allocated Budget 12,000 Crores Pradhan Mantri Kaushal Vikas Yojana (PMKVY) is the flagship scheme of the Ministry of Skill Development and Entrepreneurship (MSDE). The objective of this Skill Certification Scheme is to enable a large number of Indian youth to take up industry-relevant skill training that will help them in securing a better livelihood. Individuals with prior learning experience or skills will also be assessed and certified under Recognition of Prior Learning (RPL)."
+        android:textColor="#000000" />
+</RelativeLayout>

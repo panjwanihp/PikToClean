@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="pink">#fe104d</color>
+    <color name="background_color">#009688</color>
+    <color name="transperent">#80FFFFFF</color>
+
+    <color name="colorTransperentWhite">#cccccc</color>
+    <color name="white">#FFFFFF</color>
 </resources>
