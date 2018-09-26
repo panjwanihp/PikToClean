@@ -45,114 +45,170 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
     <Button
         android:id="@+id/skipid"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_gravity="right"
         android:layout_marginLeft="5dp"
-
         android:background="@android:color/transparent"
         android:clickable="true"
         android:text="SKIP>>"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textStyle="italic"
         android:visibility="visible" />
+
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mobno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/mobno"
-            android:layout_width="match_parent"
-            android:layout_height="293dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <EditText
+            android:id="@+id/number"
+            style="@android:style/Widget.Material.AutoCompleteTextView"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
+            android:drawableLeft="@drawable/ic_local_phone_black_24dp"
+            android:drawablePadding="20dp"
+            android:hint="+(Country Code)(Mobile Number)"
+            android:inputType="text|number"
+            app:layout_constraintBottom_toBottomOf="@+id/OTP"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/number"
-                style="@android:style/Widget.Material.AutoCompleteTextView"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_local_phone_black_24dp"
-                android:drawablePadding="20dp"
-                android:hint="Mobile Number"
-                android:inputType="text|number" />
-
-            <Button
-                android:id="@+id/sendotpButton"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/buttonstylepink"
-                android:drawableRight="@drawable/ic_send_black_24dp"
-                android:text="SEND OTP"
-                android:textColor="#fff" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/otpLayout"
-            android:layout_width="match_parent"
-            android:layout_height="293dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <Button
+            android:id="@+id/sendotpButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonstylepink"
+            android:drawableRight="@drawable/ic_send_black_24dp"
+            android:text="SEND OTP"
+            android:textColor="#fff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible">
+            app:layout_constraintTop_toBottomOf="@+id/OTP" />
 
-            <EditText
-                android:id="@+id/OTP"
-                style="@android:style/Widget.Material.AutoCompleteTextView"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
-                android:drawablePadding="20dp"
-                android:hint="Enter OTP"
-                android:inputType="number" />
+        <ProgressBar
+            android:id="@+id/send"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="139dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/sendotpButton"
+            app:layout_constraintEnd_toEndOf="@+id/sendotpButton"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/sendotpButton"
+            app:layout_constraintTop_toTopOf="@+id/sendotpButton"
+            app:layout_constraintVertical_bias="1.0" />
 
-            <Button
-                android:id="@+id/VerifyButton"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/buttonstylepink"
-                android:drawableRight="@drawable/ic_send_black_24dp"
-                android:text="Verify"
-                android:textColor="#fff" />
-            <Button
-                android:id="@+id/button_resend"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/buttonstylepink"
-                android:drawableRight="@drawable/ic_send_black_24dp"
-                android:text="Verify"
-                android:textColor="#fff" />
+        <EditText
+            android:id="@+id/OTP"
+            style="@android:style/Widget.Material.AutoCompleteTextView"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="52dp"
+            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+            android:drawablePadding="20dp"
+            android:hint="Enter OTP"
+            android:visibility="invisible"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/VerifyButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            android:background="@drawable/buttonstylepink"
+            android:drawableRight="@drawable/ic_send_black_24dp"
+            android:text="Verify"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_resend"
+            app:layout_constraintTop_toBottomOf="@+id/OTP" />
+
+        <Button
+            android:id="@+id/button_resend"
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="40dp"
+            android:visibility="invisible"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/buttonstylepink"
+            android:text="Resend"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/OTP" />
+
+        <ProgressBar
+            android:id="@+id/Resend"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:visibility="invisible"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_resend"
+            app:layout_constraintEnd_toEndOf="@+id/button_resend"
+            app:layout_constraintStart_toStartOf="@+id/button_resend"
+            app:layout_constraintTop_toTopOf="@+id/button_resend" />
+
+        <ProgressBar
+            android:id="@+id/verify"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:visibility="invisible"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/VerifyButton"
+            app:layout_constraintEnd_toEndOf="@+id/VerifyButton"
+            app:layout_constraintStart_toStartOf="@+id/VerifyButton"
+            app:layout_constraintTop_toTopOf="@+id/VerifyButton"
+            app:layout_constraintVertical_bias="1.0" />
+
     </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:text=""
+
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold" />
 </LinearLayout>
