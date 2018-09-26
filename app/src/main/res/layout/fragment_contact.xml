@@ -1,72 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#ffffff"
     tools:context=".fragment.ContactFragment">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/slideViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"></android.support.v4.view.ViewPager>
 
-
-<!-- <android.support.constraint.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
--->
     <LinearLayout
-        android:id="@+id/linear1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/dotsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:padding="20dp"></LinearLayout>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+    <Button
+        android:id="@+id/prevBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/dotsLayout"
+        android:background="@color/transperent"
+        android:text="Back"
+        android:textColor="#000000"
+        android:visibility="invisible" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/gd"
-            android:layout_gravity="center"
-            />
-        </android.support.v7.widget.CardView>
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/dotsLayout"
+        android:background="@color/transperent"
+        android:text="Next"
+        android:textColor="#000000"
+        android:visibility="invisible"/>
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginBottom="8dp"
-          android:layout_marginEnd="8dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="8dp"
-          android:text="Introduction"
-          android:textSize="25dp"
-          android:textColor="@color/colorAccent"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:textColor=""
-          android:textSize="18dp"
-          android:text="The traditional way of manually monitoring the waste was the complex process and utilizes more human effort, time and cost.
-The basic project idea is to design a Smart Waste Detection System.
-System will automatically detect the garbage from the picture taken by the responsible-citizens.
-It will also have real-time monitoring capabilities, which would be remotely managed by the waste collectors (Garbage truck driver).
-
-The app is developed by Harsh Panjwani, Shivam Mudliyar, Shivam Sharma, Gavrav Wasule, Rahul Mishra
-Under the guidance of Usman Gani Buhrani
-
-The app is developed in the year of 2018
-
-
-
-"/>
- 
-    <!-- </android.support.constraint.ConstraintLayout>
--->
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>
