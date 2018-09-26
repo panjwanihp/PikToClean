@@ -3,16 +3,17 @@
 
 
 
-    <item
-        android:id="@+id/nav_cam"
-        android:icon="@drawable/ic_photo_camera_black_24dp"
-        android:title="Camera"/>
+
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="Profile"/>
-
+    <item
+        android:id="@+id/nav_cam"
+        android:icon="@drawable/ic_photo_camera_black_24dp"
+        android:title="Camera"
+        />
     <item
         android:id="@+id/nav_contact"
         android:icon="@drawable/ic_info_black_24dp"

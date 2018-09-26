@@ -17,8 +17,7 @@ import piktoclean.com.pik_to_clean.fragment.ProfileFragment;
 
 public class NavBarActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
-   // private DrawerLayout drawer;
-    //private Toolbar toolbar;
+
 
 
     public static int navItemIndex = 0;
@@ -29,10 +28,6 @@ public class NavBarActivity extends AppCompatActivity {
     public static String CURRENT_TAG = TAG_PROFILE;
     private Bitmap bitmap=null;
 
-
-
-//    private String[] activityTitles;
-
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
@@ -41,25 +36,8 @@ public class NavBarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar);
-     //   toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
         mHandler = new Handler();
-       // drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
        navigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-       // fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
-        //activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//
-//        loadNavHeader();
         setUpNavigationView();
 
         if (savedInstanceState == null) {
@@ -69,27 +47,8 @@ public class NavBarActivity extends AppCompatActivity {
         }
 
     }
-//    private void loadNavHeader() {
-//        // name, website
-//
-//
-//        // loading header background image
-//
-//
-//        // showing dot next to notifications label
-//        navigationView.getMenu().getItem(1).setActionView(R.layout.menu_dot);
-//    }
     private void loadHomeFragment() {
         selectNavMenu();
-    //    setToolbarTitle();
-
-//        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-//            drawer.closeDrawers();
-//
-//            // show or hide the fab button
-//            toggleFab();
-//            return;
-//        }
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
@@ -107,9 +66,6 @@ public class NavBarActivity extends AppCompatActivity {
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
-      //  toggleFab();
-      //  drawer.closeDrawers();
-      //  invalidateOptionsMenu();
     }
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
@@ -117,10 +73,12 @@ public class NavBarActivity extends AppCompatActivity {
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
             case 1:
-                  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,0);
-                CamFragment camFragment = new CamFragment(bitmap);
+                CamFragment camFragment = new CamFragment();
                 return camFragment;
+//                  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent,0);
+//                CamFragment camFragment = new CamFragment(bitmap);
+//                return camFragment;
             case 2:
                 ContactFragment contactFragment = new ContactFragment();
                 return contactFragment;
@@ -141,9 +99,6 @@ public class NavBarActivity extends AppCompatActivity {
          }
     }
 
-//    private void setToolbarTitle() {
-//        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
-//    }
 
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
@@ -187,29 +142,10 @@ public class NavBarActivity extends AppCompatActivity {
                 return true;
             }
         });
-//
-//       // ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-//
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                super.onDrawerClosed(drawerView);
-//            }
-//
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//            }
-//        };
-    //    drawer.setDrawerListener(actionBarDrawerToggle);
-    //    actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onBackPressed() {
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawers();
-//            return;
-//        }
         if (shouldLoadHomeFragOnBackPress) {
             if (navItemIndex != 0) {
                 navItemIndex = 0;
@@ -222,12 +158,5 @@ public class NavBarActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
-//    private void toggleFab() {
-//        if (navItemIndex == 0)
-//            fab.show();
-//        else
-//            fab.hide();
-//    }
 
 }
