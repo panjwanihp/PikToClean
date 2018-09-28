@@ -75,10 +75,6 @@ public class NavBarActivity extends AppCompatActivity {
             case 1:
                 CamFragment camFragment = new CamFragment();
                 return camFragment;
-//                  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent,0);
-//                CamFragment camFragment = new CamFragment(bitmap);
-//                return camFragment;
             case 2:
                 ContactFragment contactFragment = new ContactFragment();
                 return contactFragment;
