@@ -24,7 +24,8 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".NavBarActivity"
-            android:label="@string/title_activity_nav_bar"></activity>
+            android:label="@string/title_activity_nav_bar" />
+        <activity android:name=".ProfileImgActivity" />
     </application>
 
 </manifest>
