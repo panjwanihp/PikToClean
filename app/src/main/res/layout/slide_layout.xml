@@ -11,25 +11,37 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="52dp"
         app:srcCompat="@drawable/gd" />
 
     <TextView
         android:id="@+id/slide_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slide_image"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="WHAT IS PMKVY?"
-        android:textColor="#000000" />
+        android:layout_marginTop="209dp"
+        android:fontFamily="times new roman"
+        android:text="Introdiuction"
+        android:textColor="#C51162"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/slide_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slide_heading"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp"
-        android:text="Approved for another four years (2016-2020) to benefit 10 million youth Allocated Budget 12,000 Crores Pradhan Mantri Kaushal Vikas Yojana (PMKVY) is the flagship scheme of the Ministry of Skill Development and Entrepreneurship (MSDE). The objective of this Skill Certification Scheme is to enable a large number of Indian youth to take up industry-relevant skill training that will help them in securing a better livelihood. Individuals with prior learning experience or skills will also be assessed and certified under Recognition of Prior Learning (RPL)."
-        android:textColor="#000000" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:fontFamily="Georgia"
+        android:text="The traditional way of manually monitoring the waste was the complex process and utilizes more human effort, time and cost.\n
+The basic project idea is to design a Smart Waste Detection System.\nSystem will automatically detect the garbage from the picture taken by the responsible-citizens.\n\n
+It will also have real-time monitoring capabilities, which would be remotely managed by the waste collectors (Garbage truck driver).\n\n
+The app is developed in the year of 2018."
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 </RelativeLayout>

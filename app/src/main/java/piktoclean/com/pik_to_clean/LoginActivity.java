@@ -399,7 +399,7 @@ public class LoginActivity extends AppCompatActivity implements
             mEditor.putString("user",mPhoneNumberField.getText().toString());
             mEditor.commit();
 
-            Intent i=new Intent(LoginActivity.this,NavBarActivity.class);
+            Intent i=new Intent(LoginActivity.this,ProfileImgActivity.class);
             startActivity(i);
             finish();
             //enableViews(mPhoneNumberField, mVerificationField);
