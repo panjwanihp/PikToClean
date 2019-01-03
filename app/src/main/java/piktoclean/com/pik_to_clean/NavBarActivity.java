@@ -75,6 +75,7 @@ public class NavBarActivity extends AppCompatActivity {
             case 1:
                 CamFragment camFragment = new CamFragment();
                 return camFragment;
+
             case 2:
                 ContactFragment contactFragment = new ContactFragment();
                 return contactFragment;

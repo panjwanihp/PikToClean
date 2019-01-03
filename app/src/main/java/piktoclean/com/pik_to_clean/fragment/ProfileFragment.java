@@ -1,6 +1,7 @@
 package piktoclean.com.pik_to_clean.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,7 @@ import piktoclean.com.pik_to_clean.SliderAdapter;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-
+    private Context c;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -31,7 +32,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        c=inflater.getContext();
             return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 

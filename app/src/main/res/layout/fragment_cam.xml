@@ -6,27 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".fragment.CamFragment">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#000000">
 
         <FrameLayout
             android:id="@+id/camlayout"
             android:layout_width="match_parent"
-            android:layout_height="470dp"
-            android:background="@color/white">
-        </FrameLayout>
+            android:layout_height="match_parent"
+
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent"></FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/cap"
+            android:layout_width="95dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:clickable="true"
             android:src="@drawable/ic_camera_alt_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>
