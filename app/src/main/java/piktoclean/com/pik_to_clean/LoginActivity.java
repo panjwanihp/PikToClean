@@ -34,27 +34,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 
-//public class LoginActivity extends AppCompatActivity {
-//    private static EditText num;
-//    private static EditText otp;
-//    private static Button sendOTP;
-//    private static Button verify,skipid;
-//    private static View mobLayout, Otplayout, all;
-//    private PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
-//    private PhoneAuthProvider.ForceResendingToken resendToken;
-//    private FirebaseAuth fbauth;
-//    private String phoneVerificationId;
-//
-//        num= findViewById(R.id.number);
-//        otp= findViewById(R.id.OTP);
-//        sendOTP= findViewById(R.id.sendotpButton);
-//        verify= findViewById(R.id.VerifyButton);
-//        skipid=findViewById(R.id.skipid);
-//        Otplayout=findViewById(R.id.otpLayout);
-//        mobLayout=findViewById(R.id.mobno);
-//        all=findViewById(R.id.all);
-
-
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {
 
