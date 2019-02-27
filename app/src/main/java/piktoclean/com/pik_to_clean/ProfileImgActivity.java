@@ -60,7 +60,7 @@ public class ProfileImgActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_img);
 
-        editText = (EditText) findViewById(R.id.editText3);
+        editText = (EditText) findViewById(R.id.editText69);
         mSaveBtn = (Button) findViewById(R.id.btnSubmit);
 
         mImageViiew = findViewById(R.id.imageView3);
@@ -72,7 +72,6 @@ public class ProfileImgActivity extends AppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
-
                         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
                         requestPermissions(permissions, PERMISSION_CODE);

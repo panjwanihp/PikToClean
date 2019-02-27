@@ -3,32 +3,28 @@ package piktoclean.com.pik_to_clean.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 
 import piktoclean.com.pik_to_clean.LoginActivity;
 import piktoclean.com.pik_to_clean.R;
-import piktoclean.com.pik_to_clean.SliderAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
     private Context c;
+    private Button btn;
+    private LinearLayout login_enable,login_disable;
     public ProfileFragment() {
 
-        // Required empty public constructor
     }
 
     @Override
@@ -44,16 +40,25 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        btn = (Button) getView().findViewById(R.id.button);
+        login_enable = (LinearLayout) getView().findViewById(R.id.login_enable);
+        login_disable = (LinearLayout) getView().findViewById(R.id.login_disable);
+        SharedPreferences pref = c.getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        SharedPreferences mpreference = c.getSharedPreferences("piktoclean.com.pik_to_clean", Context.MODE_PRIVATE);
+        String name= mpreference.getString("user","");
+        if(name!="") {
 
-//        Button btn = (Button) getView().findViewById(R.id.button);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(c,LoginActivity.class));
-//            }
-//        });
-
-
+           login_disable.setVisibility(View.INVISIBLE);
+        }else{
+            login_enable.setVisibility(View.INVISIBLE);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(c, LoginActivity.class));
+                    getActivity().finish();
+                }
+            });
+        }
     }
 }
 
