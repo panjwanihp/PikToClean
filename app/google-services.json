@@ -8,22 +8,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:223577424628:android:511b1a1f8771bb0e",
+        "mobilesdk_app_id": "1:223577424628:android:693c00b96c712e8c",
         "android_client_info": {
-          "package_name": "com.piktoclean.gtdriver"
+          "package_name": "com.google.firebase.codelab.mlkit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "223577424628-torghvect0dg92f7c7oe8ub0ua8sas4c.apps.googleusercontent.com",
+          "client_id": "223577424628-vbgo4eod5ttasp96h5frlehq4i7b9g18.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.piktoclean.gtdriver",
-            "certificate_hash": "93ce95c7da2e09a5475866ef8beb01b9026cf088"
+            "package_name": "com.google.firebase.codelab.mlkit",
+            "certificate_hash": "059e1411e6d011a8a70ca712ea4b89b1e9f5b79c"
           }
         },
         {
-          "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+          "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -40,7 +40,51 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+              "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223577424628:android:e8864e2519b6675b",
+        "android_client_info": {
+          "package_name": "piktoclean.com.gtdriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223577424628-5lb5gscrb72en0hj45fo18q273j960ge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "piktoclean.com.gtdriver",
+            "certificate_hash": "93ce95c7da2e09a5475866ef8beb01b9026cf088"
+          }
+        },
+        {
+          "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdIHbDRkG9sMR3vworc8Di9jyX86DI-OA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -83,7 +127,23 @@
           }
         },
         {
-          "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+          "client_id": "223577424628-ssakfstj7h36l9nb1t8tv3vfci9fu4eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "piktoclean.com.pik_to_clean",
+            "certificate_hash": "ce18d970e5f61c37710ddac7f027f142d5010f76"
+          }
+        },
+        {
+          "client_id": "223577424628-s6ihgbf1oqto9f7h7nddkk17ok3fustq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "piktoclean.com.pik_to_clean",
+            "certificate_hash": "ad15c12879edaa84059834fa6e4fe0e7b9a78446"
+          }
+        },
+        {
+          "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -100,7 +160,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "223577424628-m1fctu00cl7deulnafj188fs57cpen7i.apps.googleusercontent.com",
+              "client_id": "223577424628-jl3g4366eut4uo3tbuo6vk7751j71bv1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

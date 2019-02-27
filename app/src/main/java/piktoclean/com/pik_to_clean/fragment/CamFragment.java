@@ -73,6 +73,7 @@ public class CamFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         c=inflater.getContext();
+
         return inflater.inflate(R.layout.fragment_cam, container, false);
 
     }
@@ -80,6 +81,7 @@ public class CamFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         fl=(FrameLayout) getView().findViewById(R.id.camlayout);
         fab=getView().findViewById(R.id.cap);
         camera= android.hardware.Camera.open();

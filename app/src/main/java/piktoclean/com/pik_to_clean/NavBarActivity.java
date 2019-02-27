@@ -1,6 +1,12 @@
 package piktoclean.com.pik_to_clean;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,8 +14,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import piktoclean.com.pik_to_clean.fragment.CamFragment;
 import piktoclean.com.pik_to_clean.fragment.ContactFragment;
@@ -22,6 +30,7 @@ public class NavBarActivity extends AppCompatActivity {
 
     public static int navItemIndex = 0;
 
+
     private static final String TAG_CAM = "Camera";
     private static final String TAG_PROFILE = "Profile";
     private static final String TAG_CONTACT = "About";
@@ -31,11 +40,19 @@ public class NavBarActivity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    private int STORAGE_PERMISSION_CODE = 1;
+
+    private int PERMISSION_ALL = 1;
+    String[] per={ Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CAMERA,android.Manifest.permission.ACCESS_FINE_LOCATION};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar);
+        if(!hasPermission(this,per)){
+            ActivityCompat.requestPermissions(this,per,PERMISSION_ALL);
+        }
         mHandler = new Handler();
        navigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         setUpNavigationView();
@@ -154,6 +171,15 @@ public class NavBarActivity extends AppCompatActivity {
 
         super.onBackPressed();
     }
-
+    public static boolean hasPermission(Context c, String... permissions){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && c!=null && permissions!=null){
+            for(String permis:permissions){
+                if(ActivityCompat.checkSelfPermission(c,permis)!=PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 }

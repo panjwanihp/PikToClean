@@ -1,10 +1,14 @@
 package piktoclean.com.pik_to_clean;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -33,26 +37,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-
-//public class LoginActivity extends AppCompatActivity {
-//    private static EditText num;
-//    private static EditText otp;
-//    private static Button sendOTP;
-//    private static Button verify,skipid;
-//    private static View mobLayout, Otplayout, all;
-//    private PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
-//    private PhoneAuthProvider.ForceResendingToken resendToken;
-//    private FirebaseAuth fbauth;
-//    private String phoneVerificationId;
-//
-//        num= findViewById(R.id.number);
-//        otp= findViewById(R.id.OTP);
-//        sendOTP= findViewById(R.id.sendotpButton);
-//        verify= findViewById(R.id.VerifyButton);
-//        skipid=findViewById(R.id.skipid);
-//        Otplayout=findViewById(R.id.otpLayout);
-//        mobLayout=findViewById(R.id.mobno);
-//        all=findViewById(R.id.all);
+import static piktoclean.com.pik_to_clean.NavBarActivity.hasPermission;
 
 
 public class LoginActivity extends AppCompatActivity implements
@@ -101,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressBar send;
     private ProgressBar resend;
     private ProgressBar verify;
+    private int PERMISSION_ALL = 1;
+    String[] per={Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +98,9 @@ public class LoginActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-
+        if(!hasermission(this,per)){
+            ActivityCompat.requestPermissions(this,per,PERMISSION_ALL);
+        }
 
 
         // Assign views
@@ -474,6 +463,16 @@ public class LoginActivity extends AppCompatActivity implements
             v.setEnabled(false);
             v.setVisibility(View.INVISIBLE);
         }
+    }
+    public static boolean hasermission(Context c, String... permissions){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && c!=null && permissions!=null){
+            for(String permis:permissions){
+                if(ActivityCompat.checkSelfPermission(c,permis)!= PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
