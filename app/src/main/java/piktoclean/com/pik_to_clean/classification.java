@@ -1,10 +1,12 @@
 package piktoclean.com.pik_to_clean;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,7 +31,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -46,25 +54,64 @@ public class classification extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     private Uri filePath;
     private ImageView imageView;
-
-
+    private TextView status;
+    private Intent i;
+    private byte[] bytes;
     private SharedPreferences mpreference;
+    private int flag;
+    private Bitmap picture;
+    private int[] pixels;
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classification);
         im=findViewById(R.id.slide_image);
-        Intent i=getIntent();
-
+        status=findViewById(R.id.status);
+        i=getIntent();
         proceedbtn = (Button) findViewById(R.id.proceed);
-        byte[] bytes=i.getByteArrayExtra("pic");
-        Bitmap picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        bytes=i.getByteArrayExtra("pic");
+        flag=i.getIntExtra("flag",0);
+        picture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        picture = picture.copy( Bitmap.Config.ARGB_8888 , true);
+        pixels = new int[picture.getHeight()*picture.getWidth()];
+        picture.getPixels(pixels, 0,picture.getWidth(), 0, 0, picture.getWidth(), picture.getHeight());
+        if(flag==1){
+            status.setText("Garbage Detected");
+            for (int x=320*15-200; x<320*15-50; x++)
+                pixels[x] = Color.RED;
+            for (int x=320*100-200; x<320*100-50; x++)
+                pixels[x] = Color.RED;
+            for (int x=320*15-200; x<320*100; x+=320)
+                pixels[x] = Color.RED;
+            for (int x=320*15-50; x<320*100; x+=320)
+                pixels[x] = Color.RED;
+        }else{
+            status.setText("Garbage Not Detected");
+        }
+        try {
+            picture.setPixels(pixels, 0, picture.getWidth(), 0, 0, picture.getWidth(), picture.getHeight());
+        }catch (Exception e){
+            Log.d("Error", "onCreate: "+e);
+        }
         im.setImageBitmap(picture);
-        File photo = new File(Environment.getExternalStorageDirectory(), "picture.jpg");
-        //  File photo = new File(getCacheDir(), "picture.jpg");
-        Uri imageuri = Uri.fromFile(photo);
+        File pic_folder = new File(Environment.getExternalStorageDirectory(), "Pik-To-Clean");
+        if (!pic_folder.exists()) {
+            pic_folder.mkdirs();
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHmmss");
+        File photo=new File(pic_folder,"ptc_"+sdf.format(new Date())+".jpg");
+        OutputStream out=null;
+        try {
+            out=new FileOutputStream(photo);
+            picture.compress(Bitmap.CompressFormat.JPEG,100,out);
+            out.flush();
+            out.close();
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       /* FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         mAuth = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -99,55 +146,55 @@ public class classification extends AppCompatActivity {
                 finish();
 
             }
-        });
+        });*/
     }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null ){
-
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    private void uplodImageg() {
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Uploading...");
-        progressDialog.show();
-        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                progressDialog.dismiss();
-                Toast.makeText(classification.this, "Uploaded", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(classification.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                        .getTotalByteCount());
-                progressDialog.setMessage("Uploaded "+(int)progress+"%");
-
-            }
-        });
-
-
-    }
+//
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+//                && data != null && data.getData() != null ){
+//
+//            filePath = data.getData();
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//                imageView.setImageBitmap(bitmap);
+//            }
+//            catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+//
+//    private void uplodImageg() {
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Uploading...");
+//        progressDialog.show();
+//        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+//        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                progressDialog.dismiss();
+//                Toast.makeText(classification.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                progressDialog.dismiss();
+//                Toast.makeText(classification.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+//                        .getTotalByteCount());
+//                progressDialog.setMessage("Uploaded "+(int)progress+"%");
+//
+//            }
+//        });
+//
+//
+//    }
 }
