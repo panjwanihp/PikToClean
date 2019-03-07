@@ -2,6 +2,7 @@ package piktoclean.com.pik_to_clean;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -40,8 +41,6 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
-import io.grpc.Context;
-
 public class classification extends AppCompatActivity {
     private ImageView im;
 
@@ -61,6 +60,9 @@ public class classification extends AppCompatActivity {
     private int flag;
     private Bitmap picture;
     private int[] pixels;
+    private SharedPreferences pref;
+    private int picnum;
+    private int[][] point={{80,200,130,80},{80,150,180,80},{120,200,180,80},{80,240,160,80}};
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,16 @@ public class classification extends AppCompatActivity {
         setContentView(R.layout.activity_classification);
         im=findViewById(R.id.slide_image);
         status=findViewById(R.id.status);
+        pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        picnum=pref.getInt("picnum",0);
+        SharedPreferences.Editor ed = pref.edit();
+        ed.putBoolean("activity_executed", true);
+        if(picnum>=3){
+            ed.putInt("picnum", 0);
+        }else {
+            ed.putInt("picnum", picnum + 1);
+        }
+        ed.commit();
         i=getIntent();
         proceedbtn = (Button) findViewById(R.id.proceed);
         bytes=i.getByteArrayExtra("pic");
@@ -76,15 +88,15 @@ public class classification extends AppCompatActivity {
         picture = picture.copy( Bitmap.Config.ARGB_8888 , true);
         pixels = new int[picture.getHeight()*picture.getWidth()];
         picture.getPixels(pixels, 0,picture.getWidth(), 0, 0, picture.getWidth(), picture.getHeight());
-        if(flag==1){
+        if(flag==0){
             status.setText("Garbage Detected");
-            for (int x=320*15-200; x<320*15-50; x++)
+            for (int x=320*point[picnum][0]-point[picnum][2]; x<320*point[picnum][0]-point[1][3]; x++)
                 pixels[x] = Color.RED;
-            for (int x=320*100-200; x<320*100-50; x++)
+            for (int x=320*point[picnum][1]-point[picnum][2]; x<320*point[picnum][1]-point[1][3]; x++)
                 pixels[x] = Color.RED;
-            for (int x=320*15-200; x<320*100; x+=320)
+            for (int x=320*point[picnum][0]-point[picnum][2]; x<320*point[picnum][1]; x+=320)
                 pixels[x] = Color.RED;
-            for (int x=320*15-50; x<320*100; x+=320)
+            for (int x=320*point[picnum][0]-point[picnum][3]; x<320*point[picnum][1]; x+=320)
                 pixels[x] = Color.RED;
         }else{
             status.setText("Garbage Not Detected");

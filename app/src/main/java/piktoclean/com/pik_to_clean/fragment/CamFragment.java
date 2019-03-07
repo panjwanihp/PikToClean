@@ -166,7 +166,7 @@ public class CamFragment extends Fragment {
                                 progressDoalog.dismiss();
 
                 }
-            },SPLASH_TIMEOUT);
+            },1000);
 
         }
     };

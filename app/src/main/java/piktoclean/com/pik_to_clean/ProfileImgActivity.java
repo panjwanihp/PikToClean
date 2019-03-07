@@ -78,31 +78,18 @@ public class ProfileImgActivity extends AppCompatActivity {
                     }
                     else {
                         pickImageFromGallery();
-
                     }
                 }
                 else {
                     pickImageFromGallery();
-
                 }
             }
         });
-
-
         mFirestore = FirebaseFirestore.getInstance();
-
-
-
-
         Log.d("user name", "here finally 1");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Log.d("user name", "here finally");
-
-
-
-
         if (user != null) {
-            // Name, email address, and profile photo Url
             String name = user.getDisplayName();
 
                 // The user's ID, unique to the Firebase project. Do NOT use this value to
@@ -121,7 +108,6 @@ public class ProfileImgActivity extends AppCompatActivity {
             String name = null;
             String uid = null;
         }
-
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,22 +147,7 @@ public class ProfileImgActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
 
-            case PERMISSION_CODE:{
-                if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_DENIED){
-
-                    pickImageFromGallery();
-                }
-                else {
-                    Toast.makeText(this, "permission deneid", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
