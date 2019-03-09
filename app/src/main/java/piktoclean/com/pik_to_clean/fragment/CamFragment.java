@@ -71,6 +71,7 @@ public class CamFragment extends Fragment {
     private ProgressDialog progressDoalog;
     private LocationManager locationManager;
     private String lattitude,longitude;
+    private double lat,lon;
     private View v2;
     private byte[] dat;
     private int flag=-1;
@@ -118,6 +119,7 @@ public class CamFragment extends Fragment {
                     }
                 }
 
+
             }
         });
         fab.setOnLongClickListener(new View.OnLongClickListener() {
@@ -143,6 +145,7 @@ public class CamFragment extends Fragment {
     }
 
 
+
     android.hardware.Camera.PictureCallback mPictureCallback = new android.hardware.Camera.PictureCallback() {
 
 
@@ -162,6 +165,8 @@ public class CamFragment extends Fragment {
                                 Intent i=new Intent(c,classification.class);
                                 i.putExtra("flag",flag);
                                 i.putExtra("pic",dat);
+                                i.putExtra("latitude",lattitude);
+                                i.putExtra("longitude",longitude);
                                 startActivity(i);
                                 progressDoalog.dismiss();
 
@@ -188,6 +193,7 @@ public class CamFragment extends Fragment {
 
             if (location != null) {
                 double latti = location.getLatitude();
+
                 double longi = location.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);

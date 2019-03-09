@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,8 +40,7 @@ public class ProfileImgActivity extends AppCompatActivity {
     private  String uid;
     private SharedPreferences mpreference;
     private SharedPreferences.Editor mEditor;
-
-    private FirebaseFirestore mFirestore;
+    private Uri pic;
 
     ImageView mImageViiew;
     Button mChooseBtn;
@@ -85,14 +85,15 @@ public class ProfileImgActivity extends AppCompatActivity {
                 }
             }
         });
-        mFirestore = FirebaseFirestore.getInstance();
         Log.d("user name", "here finally 1");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Log.d("user name", "here finally");
         if (user != null) {
             String name = user.getDisplayName();
+            Uri dp=user.getPhotoUrl();
+            mImageViiew.setImageURI(dp);
 
-                // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
                 // authenticate with your backend server, if you have one. Use
                 // FirebaseUser.getIdToken() instead.
             Log.d("user name", "not null:"+name);
@@ -116,6 +117,7 @@ public class ProfileImgActivity extends AppCompatActivity {
 
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(username)
+                        .setPhotoUri(pic)
                         .build();
 
                 user.updateProfile(profileUpdates)
@@ -153,6 +155,7 @@ public class ProfileImgActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             mImageViiew.setImageURI(data.getData());
+            pic=data.getData();
         }
     }
 }

@@ -22,6 +22,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:id="@+id/dp"
             android:src="@drawable/gb1"
                 />
             <LinearLayout
@@ -32,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shivamn"
+                    android:id="@+id/name"
                     android:textSize="22dp"
                     android:textStyle="bold"/>
                 <TextView
@@ -39,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="+918668648311"
                     android:textSize="18dp"
+                    android:id="@+id/number"
                     android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
@@ -55,11 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No Queries yet"
+            android:id="@+id/stat"
             android:textSize="18dp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"/>
-
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
 
     </LinearLayout>
