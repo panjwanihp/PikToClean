@@ -89,17 +89,19 @@ public class ProfileFragment extends Fragment {
         nam= getView().findViewById(R.id.name);
         phoneno=getView().findViewById(R.id.number);
         dp=getView().findViewById(R.id.dp);
-        nam.setText(user.getDisplayName());
-        listView=(ListView)getView().findViewById(R.id.list);
+        listView = (ListView) getView().findViewById(R.id.list);
+        dataModels = new ArrayList<>();
 
-        dataModels= new ArrayList<>();
-        SharedPreferences pref = c.getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+     //   SharedPreferences pref = c.getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         SharedPreferences mpreference = c.getSharedPreferences("piktoclean.com.pik_to_clean", Context.MODE_PRIVATE);
-        name= mpreference.getString("user","");
-        phoneno.setText(name);
-        username=mpreference.getString("name","");
-        dp.setImageURI(user.getPhotoUrl()) ;
-        if(name!="") {
+
+        username = mpreference.getString("name", "");
+        name = mpreference.getString("user", "");
+        Log.d("kjkkmklkm", "onActivityCreated: "+name);
+        if(name!="" && name!=null) {
+            nam.setText(user.getDisplayName());
+            phoneno.setText(name);
+            dp.setImageURI(user.getPhotoUrl());
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference GTdriver = db.collection("Garbage");
             GTdriver.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -132,14 +134,18 @@ public class ProfileFragment extends Fragment {
                                     dataModels.add(new DataModel(d.getString("Dname"), d.getString("Dphone"), address,picuri));
                                     count++;
                                 }
-                            adapter= new CustomAdapter(dataModels,getContext());
-                            listView.setAdapter(adapter);
-                            if(count>0){
-                                TextView v=getView().findViewById(R.id.stat);
-                                v.setText("Queries");
-                            }
+                                if(count>0){
+                                    try {
+                                        TextView v = getView().findViewById(R.id.stat);
+                                        v.setText("Queries");
+                                    }catch(Exception e){}
+                                }
 
                         }
+                        Log.d("kkk", "onComplete: "+count);
+                        adapter= new CustomAdapter(dataModels,getContext());
+                        Log.d("12", "onComplete: "+adapter);
+                        listView.setAdapter(adapter);
 
                     }
                 }

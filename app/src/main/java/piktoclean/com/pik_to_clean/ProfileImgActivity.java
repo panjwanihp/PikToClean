@@ -156,6 +156,23 @@ public class ProfileImgActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             mImageViiew.setImageURI(data.getData());
             pic=data.getData();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String username = editText.getText().toString();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(username)
+                    .setPhotoUri(pic)
+                    .build();
+
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("username", "User profile updated.");
+                            }
+                        }
+                    });
+
         }
     }
 }

@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {
 
-    private static final String TAG = "PhoneAuthActivity";
+    private static final String TAG = "kj";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int STATE_INITIALIZED = 1;
     private static final int STATE_CODE_SENT = 2;
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                 // 1 - Instant verification. In some cases the phone number can be instantly
 
-                Log.d(TAG, "onVerificationCompleted:" + credential);
+                Log.d("kj", "onVerificationCompleted:" + credential);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
                 // [END_EXCLUDE]
@@ -335,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements
                 // Np-op, handled by sign-in check
                 break;
         }
-
+ //       Log.d("kj", "updateUI: "+user.getPhoneNumber());
 
         if (user != null) {
 
@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements
             //shared preference
             mpreference = getSharedPreferences("piktoclean.com.pik_to_clean", Context.MODE_PRIVATE);
             mEditor = mpreference.edit();
-            mEditor.putString("user",mPhoneNumberField.getText().toString());
+            mEditor.putString("user",user.getPhoneNumber());
             mEditor.commit();
             Intent i=new Intent(LoginActivity.this,ProfileImgActivity.class);
             startActivity(i);
