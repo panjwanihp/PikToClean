@@ -3,13 +3,17 @@ package piktoclean.com.pik_to_clean.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -43,7 +47,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
+import piktoclean.com.pik_to_clean.CamActivity;
 import piktoclean.com.pik_to_clean.MainActivity;
 import piktoclean.com.pik_to_clean.R;
 import piktoclean.com.pik_to_clean.ShowCamera;
@@ -60,19 +68,24 @@ public class CamFragment extends Fragment {
     private ShowCamera showCamera;
     private Context c;
     private FloatingActionButton fab;
-    LocationManager locationManager;
-    String lattitude,longitude;
+    private ProgressDialog progressDoalog;
+    private LocationManager locationManager;
+    private String lattitude,longitude;
+    private double lat,lon;
     private View v2;
+    private byte[] dat;
+    private int flag=-1;
+    int SPLASH_TIMEOUT = new Random().nextInt(70000)+20000;
     public CamFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         c=inflater.getContext();
+
         return inflater.inflate(R.layout.fragment_cam, container, false);
 
     }
@@ -80,6 +93,7 @@ public class CamFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         fl=(FrameLayout) getView().findViewById(R.id.camlayout);
         fab=getView().findViewById(R.id.cap);
         camera= android.hardware.Camera.open();
@@ -100,13 +114,36 @@ public class CamFragment extends Fragment {
                     String check = getLocation();
                     if (check == "") {
                     } else {
+                        flag=1;
                         captureImage(v);
                     }
                 }
 
+
+            }
+        });
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                v2=v;
+                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+
+                } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    String check = getLocation();
+                    if (check == "") {
+                    } else {
+                        flag=0;
+                        captureImage(v);
+                    }
+                }
+
+                return true;
             }
         });
     }
+
 
 
     android.hardware.Camera.PictureCallback mPictureCallback = new android.hardware.Camera.PictureCallback() {
@@ -114,11 +151,28 @@ public class CamFragment extends Fragment {
 
         @Override
         public void onPictureTaken(byte[] data, android.hardware.Camera camera) {
+            dat=data;
+            progressDoalog = new ProgressDialog(c);
+            progressDoalog.setMax(100);
+            progressDoalog.setMessage("Predicting....");
+            progressDoalog.setTitle("Applying Model");
+            progressDoalog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDoalog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
 
-           Log.d("ij","ij"+data.toString());
-            Intent i=new Intent(c,classification.class);
-            i.putExtra("pic",data);
-            startActivity(i);
+                                Intent i=new Intent(c,classification.class);
+                                i.putExtra("flag",flag);
+                                i.putExtra("pic",dat);
+                                i.putExtra("latitude",lattitude);
+                                i.putExtra("longitude",longitude);
+                                startActivity(i);
+                                progressDoalog.dismiss();
+
+                }
+            },1000);
+
         }
     };
 
@@ -139,6 +193,7 @@ public class CamFragment extends Fragment {
 
             if (location != null) {
                 double latti = location.getLatitude();
+
                 double longi = location.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);

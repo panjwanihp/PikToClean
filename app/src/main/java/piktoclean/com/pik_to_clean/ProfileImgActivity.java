@@ -1,8 +1,12 @@
 package piktoclean.com.pik_to_clean;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,11 +37,19 @@ public class ProfileImgActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button mSaveBtn;
-private  String uid;
+    private  String uid;
     private SharedPreferences mpreference;
     private SharedPreferences.Editor mEditor;
+    private Uri pic;
 
-    private FirebaseFirestore mFirestore;
+    ImageView mImageViiew;
+    Button mChooseBtn;
+
+    private static final int IMAGE_PICK_CODE = 1000;
+    private static final int PERMISSION_CODE = 1001;
+
+
+
 
     // private FirebaseAuth mAuth;
     //private FirebaseAuth.AuthStateListener firebaseAuthListener;
@@ -47,20 +60,40 @@ private  String uid;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_img);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
-        editText = (EditText) findViewById(R.id.tvValue);
+        editText = (EditText) findViewById(R.id.editText69);
         mSaveBtn = (Button) findViewById(R.id.btnSubmit);
 
+        mImageViiew = findViewById(R.id.imageView3);
+
+        mImageViiew.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+                        requestPermissions(permissions, PERMISSION_CODE);
+                    }
+                    else {
+                        pickImageFromGallery();
+                    }
+                }
+                else {
+                    pickImageFromGallery();
+                }
+            }
+        });
         Log.d("user name", "here finally 1");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Log.d("user name", "here finally");
-
         if (user != null) {
-            // Name, email address, and profile photo Url
             String name = user.getDisplayName();
+            Uri dp=user.getPhotoUrl();
+            mImageViiew.setImageURI(dp);
 
-                // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
                 // authenticate with your backend server, if you have one. Use
                 // FirebaseUser.getIdToken() instead.
             Log.d("user name", "not null:"+name);
@@ -76,8 +109,6 @@ private  String uid;
             String name = null;
             String uid = null;
         }
-
-
         mSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +117,7 @@ private  String uid;
 
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                         .setDisplayName(username)
+                        .setPhotoUri(pic)
                         .build();
 
                 user.updateProfile(profileUpdates)
@@ -105,56 +137,43 @@ private  String uid;
                 Intent intent = new Intent(ProfileImgActivity.this, NavBarActivity.class);
                 startActivity(intent);
                 finish();
-//                Map<String, String> userMap = new HashMap<>();
-//
-//                userMap.put("name", username);
-//                userMap.put("image", "image_link");
-
-//                mFirestore.collection("users").add(userMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//
-//                        Toast.makeText(ProfileImgActivity.this, "useraname added to Firebase", Toast.LENGTH_SHORT).show();
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//
-//                        String error = e.getMessage();
-//                        Toast.makeText(ProfileImgActivity.this, "Error : " + error, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
             }
-
         });
+    }
+
+    private void pickImageFromGallery() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE);
+
+    }
 
 
-        //  mAuth = FirebaseAuth.getInstance();
 
-        //firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-  /*          @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            mImageViiew.setImageURI(data.getData());
+            pic=data.getData();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String username = editText.getText().toString();
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(username)
+                    .setPhotoUri(pic)
+                    .build();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    Intent intent = new Intent(ProfileImg.this, NavBarActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
-            }
-        };
-*/
-
-/*      //  msendData = (TextView)findViewById(R.id.usrname);
-
-    submit.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("username", "User profile updated.");
+                            }
+                        }
+                    });
 
         }
-    });
-*/
     }
 }
 

@@ -1,10 +1,12 @@
 package piktoclean.com.pik_to_clean;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -34,56 +36,27 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 
-//public class LoginActivity extends AppCompatActivity {
-//    private static EditText num;
-//    private static EditText otp;
-//    private static Button sendOTP;
-//    private static Button verify,skipid;
-//    private static View mobLayout, Otplayout, all;
-//    private PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
-//    private PhoneAuthProvider.ForceResendingToken resendToken;
-//    private FirebaseAuth fbauth;
-//    private String phoneVerificationId;
-//
-//        num= findViewById(R.id.number);
-//        otp= findViewById(R.id.OTP);
-//        sendOTP= findViewById(R.id.sendotpButton);
-//        verify= findViewById(R.id.VerifyButton);
-//        skipid=findViewById(R.id.skipid);
-//        Otplayout=findViewById(R.id.otpLayout);
-//        mobLayout=findViewById(R.id.mobno);
-//        all=findViewById(R.id.all);
-
-
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {
 
-    private static final String TAG = "PhoneAuthActivity";
-
+    private static final String TAG = "kj";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
-
     private static final int STATE_INITIALIZED = 1;
     private static final int STATE_CODE_SENT = 2;
     private static final int STATE_VERIFY_FAILED = 3;
     private static final int STATE_VERIFY_SUCCESS = 4;
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
-
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
 
 
     //Shared preference
     private SharedPreferences mpreference;
     private SharedPreferences.Editor mEditor;
-
-
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-
     private ViewGroup mPhoneNumberViews;
     //private ViewGroup mSignedInViews;
 
@@ -101,6 +74,8 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressBar send;
     private ProgressBar resend;
     private ProgressBar verify;
+    private int PERMISSION_ALL = 1;
+    String[] per={Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +86,9 @@ public class LoginActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-
+        if(!hasermission(this,per)){
+            ActivityCompat.requestPermissions(this,per,PERMISSION_ALL);
+        }
 
 
         // Assign views
@@ -139,28 +116,20 @@ public class LoginActivity extends AppCompatActivity implements
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
-        // Initialize phone auth callbacks
         // [START phone_auth_callbacks]
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                // This callback will be invoked in two situations:
+
                 // 1 - Instant verification. In some cases the phone number can be instantly
-                //     verified without needing to send or enter a verification code.
-                // 2 - Auto-retrieval. On some devices Google Play services can automatically
-                //     detect the incoming verification SMS and perform verification without
-                //     user action.
-                Log.d(TAG, "onVerificationCompleted:" + credential);
+
+                Log.d("kj", "onVerificationCompleted:" + credential);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
                 // [END_EXCLUDE]
 
                 // [START_EXCLUDE silent]
-                // Update the UI and attempt sign in with the phone credential
-//
-//                disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,mVerificationField,send,resend,verify);
-//                mDetailText.setText("Verification Succeeded");
 
                 updateUI(STATE_VERIFY_SUCCESS, credential);
                 // [END_EXCLUDE]
@@ -169,11 +138,8 @@ public class LoginActivity extends AppCompatActivity implements
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                // This callback is invoked in an invalid request for verification is made,
+
                 // for instance if the the phone number format is not valid.
-//                enableViews(mStartButton, mPhoneNumberField);
-//                disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
-//                mDetailText.setText("Verification Failed");
                 updateUI(STATE_VERIFY_FAILED);
                 Log.w(TAG, "onVerificationFailed", e);
                 // [START_EXCLUDE silent]
@@ -192,21 +158,14 @@ public class LoginActivity extends AppCompatActivity implements
                     // [END_EXCLUDE]
                 }
 
-                // Show a message and update the UI
             }
 
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-//                enableViews(mVerifyButton, mResendButton, mVerificationField);
-//                disableViews(mStartButton, mPhoneNumberField,send,resend,verify);
-//                mDetailText.setText("OTP sent");
-                    updateUI(STATE_CODE_SENT);
+                 updateUI(STATE_CODE_SENT);
                 // The SMS verification code has been sent to the provided phone number, we
-                // now need to ask the user to enter the code and then construct a credential
-                // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
-
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
@@ -302,8 +261,6 @@ public class LoginActivity extends AppCompatActivity implements
                                 // [END_EXCLUDE]
                             }
                             // [START_EXCLUDE silent]
-                            // Update UI
-              //              mDetailText.setText("Sign in failed");
                             updateUI(STATE_SIGNIN_FAILED);
                             // [END_EXCLUDE]
                         }
@@ -321,9 +278,6 @@ public class LoginActivity extends AppCompatActivity implements
         if (user != null) {
             updateUI(STATE_SIGNIN_SUCCESS, user);
         } else {
-//            enableViews(mStartButton, mPhoneNumberField);
-//            disableViews(mVerifyButton, mResendButton, mVerificationField,send,resend,verify);
-//            mDetailText.setText(null);
             updateUI(STATE_INITIALIZED);
         }
     }
@@ -381,33 +335,21 @@ public class LoginActivity extends AppCompatActivity implements
                 // Np-op, handled by sign-in check
                 break;
         }
+ //       Log.d("kj", "updateUI: "+user.getPhoneNumber());
 
+        if (user != null) {
 
-        if (user == null) {
-            // Signed out
-            //mPhoneNumberViews.setVisibility(View.VISIBLE);
-            //mSignedInViews.setVisibility(View.GONE);
-
-            //mStatusText.setText(R.string.signed_out);
-        } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
 
             //shared preference
             mpreference = getSharedPreferences("piktoclean.com.pik_to_clean", Context.MODE_PRIVATE);
             mEditor = mpreference.edit();
-            mEditor.putString("user",mPhoneNumberField.getText().toString());
+            mEditor.putString("user",user.getPhoneNumber());
             mEditor.commit();
-
             Intent i=new Intent(LoginActivity.this,ProfileImgActivity.class);
             startActivity(i);
             finish();
-            //enableViews(mPhoneNumberField, mVerificationField);
-            //mPhoneNumberField.setText(null);
-            //mVerificationField.setText(null);
-
-           // mStatusText.setText("signed_in");
-            //mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
         }
     }
 
@@ -417,7 +359,6 @@ public class LoginActivity extends AppCompatActivity implements
             mPhoneNumberField.setError("Invalid phone number.");
             return false;
         }
-
         return true;
     }
 
@@ -425,7 +366,6 @@ public class LoginActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sendotpButton:
-                Log.d("jhb","kijhb");
                 disableViews(mStartButton);
                 enableViews(send);
                 if (!validatePhoneNumber()) {
@@ -441,7 +381,6 @@ public class LoginActivity extends AppCompatActivity implements
                     mVerificationField.setError("Cannot be empty.");
                     return;
                 }
-
                 disableViews(mVerifyButton);
                 enableViews(verify);
                 verifyPhoneNumberWithCode(mVerificationId, code);
@@ -474,6 +413,16 @@ public class LoginActivity extends AppCompatActivity implements
             v.setEnabled(false);
             v.setVisibility(View.INVISIBLE);
         }
+    }
+    public static boolean hasermission(Context c, String... permissions){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && c!=null && permissions!=null){
+            for(String permis:permissions){
+                if(ActivityCompat.checkSelfPermission(c,permis)!= PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
